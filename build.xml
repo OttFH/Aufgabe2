@@ -33,7 +33,7 @@
 
   <target name="run" depends="jar">
     <java jar="${target.dir}/${ant.project.name}-1.0-SNAPSHOT.jar" fork="true">
-      <arg value="Clemens Ott"/>
+      <arg value="Clemens Ott und George Oswald"/>
     </java>
   </target>
 
