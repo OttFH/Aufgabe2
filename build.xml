@@ -1,0 +1,39 @@
+<project name="SimpleAutomaticBuildProject">
+  <property name="src.dir" value="${ant.project.name}/src/main/java/at/fhj/iit" />
+  <property name="bin.dir" value="build-ant/classes" />
+  <property name="main-class"  value="at.fhj.iit.Main"/>
+
+  <target name="init">
+    <mkdir dir="build-ant"/>
+    <mkdir dir="${bin.dir}"/>
+  </target>  
+  
+  <target name="clean">
+  	<delete dir="build-ant"/>
+    <delete dir="${bin.dir}"/>
+  </target>
+  
+  <target name="compile" depends="init">
+    <javac srcdir="${src.dir}" destdir="${bin.dir}" includeantruntime="false"/>
+  </target>  
+
+  <target name="jar" depends="clean,compile">
+    <jar destfile="build-ant/${ant.project.name}-1.0-SNAPSHOT.jar" basedir="build-ant">
+      <fileset dir="${bin.dir}" includes="**/*.class" />
+      <manifest>
+        <attribute name="Main-Class"  value="${main-class}"/>
+      </manifest>
+    </jar>
+  </target>
+
+  <target name="install" depends="jar">
+
+  </target>
+
+  <target name="run" depends="jar">
+    <java jar="build-ant/SimpleAutomaticBuildProject-1.0-SNAPSHOT.jar" fork="true">
+      <arg value="Clemens Ott"/>
+    </java>
+  </target>
+
+</project>
