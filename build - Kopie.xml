@@ -1,0 +1,38 @@
+<project name="SimpleAutomaticBuildProject">
+  <property file = "build.properties"/>
+
+  <target name="init">
+    <mkdir dir="${lib.dir}"/>
+    <mkdir dir="${bin.dir}"/>
+    <mkdir dir="${dist.dir}"/>
+  </target>  
+  
+  <target name="clean">
+  	<delete dir="${lib.dir}"/>
+    <delete dir="${bin.dir}"/>
+    <delete dir="${dist.dir}"/>
+  </target>
+  
+  <target name="compile" depends="init">
+    <javac srcdir="${src.dir}" destdir="${bin.dir}" includeantruntime="false"/>
+  </target>  
+
+  <target name="jar" depends="clean,compile">
+    <jar destfile="${lib.dir}/${ant.project.name}.jar" basedir="${bin.dir}">
+      <manifest>
+        <attribute name="Main-Class"  value="${main-class}"/>
+      </manifest>
+    </jar>
+  </target>
+
+  <target name="install" depends="jar">
+    <copy file="${lib.dir}/${ant.project.name}.jar" todir="${dist.dir}"/>
+  </target>
+
+  <target name="run" depends="jar">
+    <java jar="${lib.dir}/${ant.project.name}.jar" fork="true">
+      <arg value="${name}"/>
+    </java>
+  </target>
+
+</project>
